@@ -1,0 +1,62 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image-Search-Abstraction-Layer</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://cdn1.iconfinder.com/data/icons/social-17/48/photos2-512.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/public/style.css">
+  </head>
+  <body>
+    
+      <h1>Image Search Abstraction Layers</h1>
+      <h3>Objective:</h3>
+      <ul>
+        Build a full stack JavaScript app that allows you to search for images like this: 
+        <a href="https://cryptic-ridge-9197.herokuapp.com/api/imagesearch/lolcats%20funny?offset=10" target="_blank">https://cryptic-ridge-9197.herokuapp.com/api/imagesearch/lolcats%20funny?offset=10</a> 
+        and browse recent search queries like this: 
+        <a href="https://cryptic-ridge-9197.herokuapp.com/api/latest/imagesearch/" target="_blank">https://cryptic-ridge-9197.herokuapp.com/api/latest/imagesearch/</a>. 
+        Then deploy it to Glitch.
+      </ul>
+        
+      <h3>User stories:</h3>
+      <ul>
+        <li>I can get the image URLs, alt text and page urls for a set of images relating to a given search string.</li>
+        <li>I can paginate through the responses by adding a ?offset=2 parameter to the URL.</li>
+        <li>I can get a list of the most recently submitted search strings.</li>
+      </ul>
+      <script>
+  (function() {
+    var cx = '016851314860673618006:ilcmdz2l4h0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+    <button onclick="cl()">
+      click
+    </button>
+    <script>
+      function cl(){
+        // alert(document.getElementsByTagName("input")[1]);
+        document.getElementsByTagName("input")[0].value = "hello";
+        document.getElementsByTagName("input")[1].click();
+      }
+    </script>
+  </body>
+</html>
