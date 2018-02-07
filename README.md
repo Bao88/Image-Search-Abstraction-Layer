@@ -1,27 +1,24 @@
-Welcome to the Glitch BETA
-=========================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
-
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
-
-
-Your Project
-------------
-
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-
-Made by [Fog Creek](https://fogcreek.com/)
--------------------
-
-\ ゜o゜)ノ
+      <h1>Image Search Abstraction Layers</h1>
+      <h3>Objective:</h3>
+      <ul>
+        Build a full stack JavaScript app that allows you to search for images like this: 
+        <a href="https://cryptic-ridge-9197.herokuapp.com/api/imagesearch/lolcats%20funny?offset=10" target="_blank">https://cryptic-ridge-9197.herokuapp.com/api/imagesearch/lolcats%20funny?offset=10</a> 
+        and browse recent search queries like this: 
+        <a href="https://cryptic-ridge-9197.herokuapp.com/api/latest/imagesearch/" target="_blank">https://cryptic-ridge-9197.herokuapp.com/api/latest/imagesearch/</a>. Then deploy it to Glitch.
+      </ul>
+      <h3>User stories:</h3>
+      <ul>
+        <li>I can get the image URLs, alt text and page urls for a set of images relating to a given search string.</li>
+        <li>I can paginate through the responses by adding a ?offset=2 parameter to the URL.</li>
+        <li>I can get a list of the most recently submitted search strings.</li>
+      </ul>
+      <h3>Usage - Search and Paginate, Retrieve recently searched strings</h3>
+      <ul>
+        <li><a href="https://bao88-image-search-abstraction-layer.glitch.me/api/imagesearch/Dragon?offset=1" target="_blank">https://bao88-image-search-abstraction-layer.glitch.me/api/imagesearch/Dragon?offset=1</a></li>  
+        <li><a href="https://bao88-image-search-abstraction-layer.glitch.me/api/latest/imagesearch/" target="_blank">https://bao88-image-search-abstraction-layer.glitch.me/api/latest/imagesearch/</a></li>  
+      </ul>
+      <h3>Output - Recently searched strings and search results</h3>
+     <img id="one" src="https://cdn.glitch.com/7cf96637-cf2b-4d64-abf9-eac94f9b81c3%2Flatest-imagesearch.png?1518039701956" alt="latest">
+      <img id="two" src="https://cdn.glitch.com/7cf96637-cf2b-4d64-abf9-eac94f9b81c3%2Fimagesearch.png?1518039702712" alt="search">
+    <h1>The app can be found <a href="https://bao88-image-search-abstraction-layer.glitch.me/" target="_blank">here</a></h1>

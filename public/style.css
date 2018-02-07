@@ -1,13 +1,47 @@
 @import url('https://fonts.googleapis.com/css?family=BioRhyme+Expanded|Oswald');
+html{height: 100%; width: 100%;}
 body {
   font-family: 'Oswald', sans-serif;
   margin: 25px;
+  background: url("http://lenakhalid.com/file/2017/09/image-search-for-marketing-strategy.png"), linear-gradient(to right, rgba(255,100,0,0.3), rgba(255,0,100,0.8));;
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
 
 li {
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 a {
   color: blue; 
+}
+
+img {
+  width: 200px; 
+  border: solid;
+  border-radius: 10px;
+  transition: all 1s;
+}
+
+#one {
+  position: absolute;
+  height: 147px;
+}
+
+#one:hover {
+  transform: scale(4) translate(10vw, -9vh);
+  z-index: 1;
+/*   padding: 20px; */
+  transition:all 1s;
+}
+
+#two {
+  position: absolute;
+  left: 250px;
+}
+
+#two:hover {
+  transform: scale(4) translate(6.5vw, -9vh);
+  z-index: 1;
+  transition:all 1s;
 }

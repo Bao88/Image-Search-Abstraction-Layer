@@ -9,18 +9,20 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var mongodb = require("mongodb");
-// const sec = require('search-engine-client');
- 
+
+// var fetch = require('node-fetch');
+// var google = require('google');
+
 // var GoogleSearch = require('google-search');
 // var googleSearch = new GoogleSearch({
 //   key: process.env.GKEY,
 //   cx: process.env.CX
 // });
-// const GoogleSearch = require('wko-google-search');
-// // var googleSearch = new GoogleSearch({
-// //   key: process.env.GKEY,
-// //   cx: process.env.CX
-// // });
+const GoogleSearch = require('wko-google-search');
+var googleSearch = new GoogleSearch({
+  key: process.env.GKEY,
+  cx: process.env.CX
+});
 
 // --------------------------------- Freecodecamp ---------------------------------
 if (!process.env.DISABLE_XORIGIN) {
@@ -65,96 +67,55 @@ mongodb.MongoClient.connect(uri, function(err, database){
   latest = myDB.collection(process.env.DB2);
   latest.count().then(function(items){
     console.log("latest " + items);
+    size=items;
   });
-  // console.log(collection);
-  // database = db.collection(process.env.DB);
 });
-// /^\/(discussion|page)\/(.+)/
-// Create a new shortened url and store it in mongoDB
+// search images using google API
 app.route('/api/imagesearch/*').get(function(req, res) {
-  // console.log(req.url.slice(5));
-  console.log(req.url.slice(17).split("?"));
+
   var url = req.url.slice(17).split("?")[0].replace("%20", " ");
   var off = req.url.slice(17).split("?")[1].replace("offset=", "");
-  var objArray = [];
-  console.log(url + " " + off);
+  var objArray = [], date = new Date();
+  // console.log(url + " " + off);
   
-  // googleSearch.build({
-  //   q: "",
-  //   start: 5,
-  //   fileType: "pdf",
-  //   gl: "tr", //geolocation, 
-  //   lr: "lang_tr",
-  //   num: 10, // Number of search results to return between 1 and 10, inclusive 
-  //   siteSearch: "" // Restricts results to URLs from a specified site 
-  // }, function(error, response) {
-  //   console.log(response);
-  // });
-  // googleSearch.fetch('foo', (err, hits) => {
-  //   console.log(hits);
-  // });
+//   Store the search history
+  latest.save({
+    _id: size++,
+    term: url,
+    when: new Date().toJSON()
+  });
   
-//   googleSearch.fetch(url, {
-//     offset: off,
-//     limit: 10
-//   }, (err, hits) => {
-//     // console.log(hits.length);
-//     // console.log("image: "+ hits[0].pagemap.cse_image[0].src);
-//     // console.log("snippet: " + hits[0].snippet);
-//     // console.log("thumbnail: " + hits[0].pagemap.cse_thumbnail[0].src);
-//     // console.log("context" + hits[0].link);
-//     console.log(hits);
-//     for(var i = 0; i < hits.length; i++){
+  googleSearch.fetch(url, {
+    offset: off,
+    limit: 10
+  }, function(err, hits){
+    for(var i = 0; i < hits.length; i++){
   
-//        objArray.push(
-//        {
-//          url: hits[i].pagemap.cse_image[0].src,
-//          snippet: hits[i].snippet,
-//          thumbnail: hits[i].pagemap.cse_thumbnail[0].src,
-//          context: hits[i].link
-//        }
-//      ); 
-//     }
-//     res.status(200);
-//     res.type("json").send(objArray);
-//   });
-  // var regex = new RegExp("^(http|https)://");
-  // if(regex.test(req.url.slice(5))){
-   // console.log("inside"); 
-  // }
-  
-//   var nUrl = req.url.slice(5);
-//   var object = {original_url: "", short_url: ""};
-//   collection.find({original_url: nUrl}).next().then(function(items){
-//     // console.log(items);
-//     if(items === null){   //The URL has not been indexed yet
-//       object.original_url = nUrl;
-//       object.short_url = "https://bao88-url-shortener-microservice.glitch.me/" + size++;
-//       collection.save(object);
-//       // res.send("create new short url: " + object);
-//     } else {             // The URL is already indexed
-//       object.original_url = items.original_url;
-//       object.short_url = items.short_url;
-//     }
-//     res.status(200);
-//     res.type("json").send({original_url: object.original_url, short_url: object.short_url});
-//   });
-  // collection.save({url: nUrl, number:1});
-		  res.send("Do something!");
+       objArray.push(
+       {
+         url: hits[i].pagemap.cse_image ? hits[i].pagemap.cse_image[0].src : hits[i].pagemap.cse_image,
+         snippet: hits[i].snippet,
+         thumbnail: hits[i].pagemap.cse_thumbnail ? hits[i].pagemap.cse_thumbnail[0].src : hits[i].pagemap.cse_thumbnail,
+         context: hits[i].link
+       }
+     ); 
+    }
+    
+    res.status(200);
+    res.type("json").send(objArray);   
+  });
 })
 
 // Retrieve url from the mongoDB with the shortened url
 app.route('/api/latest/imagesearch/').get(function(req, res) {
   // var url = "https://bao88-url-shortener-microservice.glitch.me"+req.url;
   console.log(req.url);
-  // collection.find({short_url: url}).next().then(function(item){
-  //   // console.log(item);
-  //   if(item){
-  //     res.redirect(item.original_url);  
-  //   } else {
-  //     res.send("No shortened URLs with that name.");
-  //   }
-  // });	  
+  latest.find( { _id: {$gt: size-11} }, { _id: 0, term: 1, when: 1}).toArray().then(function(items){
+    items.map(function(item){delete item._id;});
+    console.log(items);
+    res.status(200);
+    res.type("json").send(items); 
+  });  
 })
 // --------------------------------- end mycode ---------------------------------
 
